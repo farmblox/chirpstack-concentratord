@@ -19,9 +19,9 @@ impl Default for ComType {
 pub struct Configuration {
     pub radio_count: usize,
     pub clock_source: u8,
-    pub temp_dev_path: [u8, 64],
+    pub temp_dev_path: [u8; 64],
     pub full_duplex: bool,
-    pub pa_dev_path: [u8, 64],
+    pub pa_dev_path: [u8; 64],
     pub lora_multi_sf_bandwidth: u32,
     pub radio_config: Vec<RadioConfig>,
     pub gps_tty_path: Option<String>,
