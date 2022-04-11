@@ -13,6 +13,8 @@ pub fn new(conf: &config::Configuration) -> Configuration {
     Configuration {
         radio_count: 2,
         clock_source: 0,
+        temp_dev_path: '',
+        pa_dev_path: '',
         full_duplex: false,
         lora_multi_sf_bandwidth: 125000,
         radio_config: vec![
