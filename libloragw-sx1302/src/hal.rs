@@ -305,11 +305,11 @@ pub struct BoardConfig {
     /// Index of RF chain which provides clock to concentrator.
     pub clock_source: u8,
     /// Path to access the I2C device to read board temp 
-    pub temp_dev_path: String,
+    pub temp_dev_path: [u8; 64],
     /// Indicates if the gateway operates in full duplex mode or not.
     pub full_duplex: bool,
     /// Path to access I2C Device to control AD5338R DAC
-    pub pa_dev_path: String,
+    pub pa_dev_path: [u8; 64],
     /// The Communication interface (SPI/USB) to connect to the SX1302.
     pub com_type: super::com::ComType,
     /// Path to access the COM device to connect to the SX1302.
