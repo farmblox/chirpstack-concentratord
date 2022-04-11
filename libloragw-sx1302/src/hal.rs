@@ -304,8 +304,12 @@ pub struct BoardConfig {
     pub lorawan_public: bool,
     /// Index of RF chain which provides clock to concentrator.
     pub clock_source: u8,
+    /// Path to access the I2C device to read board temp 
+    pub temp_dev_path: String,
     /// Indicates if the gateway operates in full duplex mode or not.
     pub full_duplex: bool,
+    /// Path to access I2C Device to control AD5338R DAC
+    pub pa_dev_path: String,
     /// The Communication interface (SPI/USB) to connect to the SX1302.
     pub com_type: super::com::ComType,
     /// Path to access the COM device to connect to the SX1302.
@@ -326,8 +330,10 @@ impl BoardConfig {
 
         return Ok(wrapper::lgw_conf_board_s {
             lorawan_public: self.lorawan_public,
+            temp_dev_path: self.temp_dev_path,
             clksrc: self.clock_source,
             full_duplex: self.full_duplex,
+            pa_dev_path: self.pa_dev_path,
             com_type: self.com_type.to_hal(),
             com_path: com_path_chars,
         });
