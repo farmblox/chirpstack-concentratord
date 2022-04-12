@@ -7,9 +7,9 @@ pub fn board_setconf(config: &Configuration) -> Result<(), String> {
     let board_config = hal::BoardConfig {
         lorawan_public: config.gateway.lorawan_public,
         clock_source: config.gateway.model_config.clock_source,
-        temp_dev_path: config.gateway.model_config.temp_dev_path,
+        temp_dev_path: config.gateway.model_config.temp_dev_path.clone(),
         full_duplex: config.gateway.model_config.full_duplex,
-        pa_dev_path: config.gateway.model_config.pa_dev_path,
+        pa_dev_path: config.gateway.model_config.pa_dev_path.clone(),
         com_type: match config.gateway.model_config.com_type {
             ComType::SPI => com::ComType::SPI,
             ComType::USB => com::ComType::USB,

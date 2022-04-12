@@ -305,11 +305,11 @@ pub struct BoardConfig {
     /// Index of RF chain which provides clock to concentrator.
     pub clock_source: u8,
     /// Path to access the I2C device to read board temp 
-    pub temp_dev_path: [u8; 64],
+    pub temp_dev_path: String,
     /// Indicates if the gateway operates in full duplex mode or not.
     pub full_duplex: bool,
     /// Path to access I2C Device to control AD5338R DAC
-    pub pa_dev_path: [u8; 64],
+    pub pa_dev_path: String,
     /// The Communication interface (SPI/USB) to connect to the SX1302.
     pub com_type: super::com::ComType,
     /// Path to access the COM device to connect to the SX1302.
@@ -328,12 +328,32 @@ impl BoardConfig {
             com_path_chars[i] = *b as c_char;
         }
 
+        let temp_dev_path = CString::new(self.temp_dev_path.clone()).unwrap();
+        let temp_dev_path = temp_dev_path.as_bytes_with_nul();
+        if temp_dev_path.len() > 64 {
+            return Err("temp_dev_path max length is 64".to_string());
+        }
+        let mut temp_path_chars = [0; 64];
+        for (i, b) in temp_dev_path.iter().enumerate() {
+            temp_path_chars[i] = *b as c_char;
+        }
+
+        let pa_dev_path = CString::new(self.pa_dev_path.clone()).unwrap();
+        let pa_dev_path = pa_dev_path.as_bytes_with_nul();
+        if pa_dev_path.len() > 64 {
+            return Err("pa_dev_path max length is 64".to_string());
+        }
+        let mut pa_path_chars = [0; 64];
+        for (i, b) in pa_dev_path.iter().enumerate() {
+            pa_path_chars[i] = *b as c_char;
+        }
+
         return Ok(wrapper::lgw_conf_board_s {
             lorawan_public: self.lorawan_public,
-            temp_dev_path: self.temp_dev_path,
+            temp_dev_path: temp_path_chars,
             clksrc: self.clock_source,
             full_duplex: self.full_duplex,
-            pa_dev_path: self.pa_dev_path,
+            pa_dev_path: pa_path_chars,
             com_type: self.com_type.to_hal(),
             com_path: com_path_chars,
         });
