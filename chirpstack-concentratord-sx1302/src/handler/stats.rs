@@ -44,7 +44,7 @@ pub fn stats_loop(
         };
 
         // fetch the concentrator temperature.
-        match hal::get_temperature() {
+/*         match hal::get_temperature() {
             Ok(v) => {
                 metadata.insert("concentrator_temp".to_string(), format!("{}", v));
             }
@@ -53,7 +53,7 @@ pub fn stats_loop(
                 error!("Get concentrator temperature error, error: {}", err);
             }
         }
-
+ */
         stats::send_and_reset(gateway_id, loc, &metadata).expect("sending stats failed");
     }
 
